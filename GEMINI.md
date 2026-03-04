@@ -1,0 +1,25 @@
+# Jackson Bull Personal Website
+
+A cohesive personal website showcasing diverse interests across professional, hobbyist, and personal verticals.
+
+## 🚀 Current Backlog
+
+## 🔴 CRITICAL ISSUES
+- **None currently known:** Website is functional and organized.
+
+### 1. Asset Optimization
+- **Goal:** Organize images into subfolders (e.g., `/images/grow-room`, `/images/k10-build`) and update links.
+- **Status:** ✅ Completed (Grow Room images moved and links updated).
+
+### 2. CMS Integration
+- **Goal:** Pull content for "Grow Room" and "Sandwich" sections from CMS markdown files instead of hardcoding.
+- **Status:** Pending.
+
+### 3. SEO & Metadata
+- **Goal:** Improve meta tags and social sharing previews.
+- **Status:** Pending.
+
+## 📝 Project Notes
+- **Focus:** Professional portfolio, Grow Room journals, K10 restoration, and Sandwich reviews.
+- **Backend:** Netlify CMS (Git Gateway).
+- **Frontend:** Single-page HTML/CSS/JS (refactored to external assets).

@@ -9,1188 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --sand-light: #E8DCC4;
-            --sand-mid: #C4A574;
-            --sand-dark: #8B7355;
-            --spice-orange: #D4740C;
-            --spice-glow: #FF8C00;
-            --deep-desert: #1A1611;
-            --night-sky: #0D0B09;
-            --stone: #2A2520;
-            --bone: #F5F0E6;
-            --water-blue: #4A9EBF;
-            --plant-green: #5B8A4C;
-            --warm-bread: #D4A574;
-            --rust-red: #B5452A;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Rajdhani', sans-serif;
-            background: var(--night-sky);
-            color: var(--sand-light);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* Animated background */
-        .bg-pattern {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: 
-                radial-gradient(ellipse at 20% 80%, rgba(212, 116, 12, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(212, 116, 12, 0.05) 0%, transparent 40%),
-                radial-gradient(ellipse at 50% 50%, rgba(139, 115, 85, 0.03) 0%, transparent 60%),
-                var(--night-sky);
-        }
-
-        .sand-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--sand-mid);
-            border-radius: 50%;
-            animation: drift 20s infinite linear;
-        }
-
-        @keyframes drift {
-            0% { transform: translateX(-100vw) translateY(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateX(100vw) translateY(-50px); opacity: 0; }
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1.5rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(to bottom, rgba(13, 11, 9, 0.95), transparent);
-            backdrop-filter: blur(10px);
-        }
-
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 0.3em;
-            color: var(--spice-orange);
-            text-transform: uppercase;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 500;
-            font-size: 0.9rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--sand-light);
-            text-decoration: none;
-            position: relative;
-            padding: 0.5rem 0;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--spice-orange);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--spice-orange);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 6rem 2rem 4rem;
-            position: relative;
-        }
-
-        .hero-glyph {
-            width: 120px;
-            height: 120px;
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards 0.3s;
-        }
-
-        .hero-glyph svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 900;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--bone) 0%, var(--sand-mid) 50%, var(--spice-orange) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards 0.5s;
-        }
-
-        .hero-tagline {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.85rem;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: var(--sand-mid);
-            margin-bottom: 3rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards 0.7s;
-        }
-
-        .hero-description {
-            max-width: 600px;
-            font-size: 1.2rem;
-            font-weight: 300;
-            line-height: 1.8;
-            color: var(--sand-light);
-            margin-bottom: 3rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards 0.9s;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Vertical Cards */
-        .verticals {
-            padding: 6rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 0.4em;
-            text-transform: uppercase;
-            color: var(--spice-orange);
-            margin-bottom: 1rem;
-        }
-
-        .section-header p {
-            font-size: 1.1rem;
-            color: var(--sand-mid);
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            position: relative;
-            background: linear-gradient(145deg, rgba(42, 37, 32, 0.8), rgba(26, 22, 17, 0.9));
-            border: 1px solid rgba(196, 165, 116, 0.15);
-            border-radius: 4px;
-            padding: 2.5rem;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            cursor: pointer;
-            text-decoration: none;
-            display: block;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--card-accent, var(--spice-orange));
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-
-        .card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(196, 165, 116, 0.3);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.4),
-                0 0 60px rgba(212, 116, 12, 0.1);
-        }
-
-        .card-icon {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 1.5rem;
-            color: var(--card-accent, var(--spice-orange));
-        }
-
-        .card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--bone);
-            margin-bottom: 1rem;
-        }
-
-        .card p {
-            font-size: 1rem;
-            color: var(--sand-mid);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .tag {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 0.3rem 0.8rem;
-            background: rgba(196, 165, 116, 0.1);
-            border: 1px solid rgba(196, 165, 116, 0.2);
-            border-radius: 2px;
-            color: var(--sand-mid);
-        }
-
-        /* Card accent colors */
-        .card--professional { --card-accent: var(--water-blue); }
-        .card--sandwich { --card-accent: var(--warm-bread); }
-        .card--grow { --card-accent: var(--plant-green); }
-        .card--k10 { --card-accent: var(--rust-red); }
-        .card--other { --card-accent: var(--spice-orange); }
-
-        /* Decorative divider */
-        .divider {
-            width: 100%;
-            max-width: 800px;
-            margin: 4rem auto;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--sand-dark), transparent);
-            position: relative;
-        }
-
-        .divider::before {
-            content: '◆';
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--night-sky);
-            padding: 0 1rem;
-            color: var(--spice-orange);
-            font-size: 0.8rem;
-        }
-
-        /* Professional Section */
-        .section {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            color: var(--bone);
-        }
-
-        .section-subtitle {
-            font-size: 1.1rem;
-            color: var(--sand-mid);
-            margin-bottom: 3rem;
-            max-width: 600px;
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 3rem 0;
-        }
-
-        .skill-item {
-            background: rgba(42, 37, 32, 0.5);
-            border: 1px solid rgba(196, 165, 116, 0.1);
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .skill-item:hover {
-            border-color: var(--spice-orange);
-            background: rgba(212, 116, 12, 0.1);
-        }
-
-        .skill-item span {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.85rem;
-            letter-spacing: 0.05em;
-        }
-
-        /* Project Cards */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .project-card {
-            background: linear-gradient(145deg, rgba(42, 37, 32, 0.6), rgba(26, 22, 17, 0.8));
-            border: 1px solid rgba(196, 165, 116, 0.1);
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover {
-            border-color: var(--water-blue);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .project-card h4 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            color: var(--bone);
-            margin-bottom: 0.5rem;
-        }
-
-        .project-card .project-type {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--water-blue);
-            margin-bottom: 1rem;
-        }
-
-        .project-card p {
-            color: var(--sand-mid);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .project-card .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .project-card .tech {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.65rem;
-            padding: 0.25rem 0.6rem;
-            background: rgba(74, 158, 191, 0.15);
-            border: 1px solid rgba(74, 158, 191, 0.3);
-            color: var(--water-blue);
-        }
-
-        /* Sandwich Section */
-        .sandwich-section {
-            background: linear-gradient(180deg, transparent, rgba(212, 165, 116, 0.03), transparent);
-        }
-
-        .rating-system {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-
-        .rating-criterion {
-            background: rgba(42, 37, 32, 0.5);
-            border: 1px solid rgba(212, 165, 116, 0.15);
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .rating-criterion h4 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.85rem;
-            letter-spacing: 0.15em;
-            color: var(--warm-bread);
-            margin-bottom: 0.5rem;
-        }
-
-        .rating-criterion p {
-            font-size: 0.9rem;
-            color: var(--sand-mid);
-        }
-
-        .top-sandwiches {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .sandwich-card {
-            background: linear-gradient(145deg, rgba(42, 37, 32, 0.7), rgba(26, 22, 17, 0.9));
-            border: 1px solid rgba(212, 165, 116, 0.2);
-            padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .sandwich-card::before {
-            content: attr(data-rank);
-            position: absolute;
-            top: -10px;
-            right: 10px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 4rem;
-            font-weight: 900;
-            color: rgba(212, 165, 116, 0.1);
-        }
-
-        .sandwich-card h4 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.95rem;
-            letter-spacing: 0.1em;
-            color: var(--bone);
-            margin-bottom: 0.5rem;
-        }
-
-        .sandwich-card .score {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--warm-bread);
-            margin-bottom: 0.75rem;
-        }
-
-        .sandwich-card p {
-            font-size: 0.9rem;
-            color: var(--sand-mid);
-        }
-
-        /* Grow Room Section */
-        .grow-section {
-            background: linear-gradient(180deg, transparent, rgba(91, 138, 76, 0.03), transparent);
-        }
-
-        .grow-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-
-        .stat-box {
-            text-align: center;
-            padding: 1.5rem;
-            background: rgba(91, 138, 76, 0.1);
-            border: 1px solid rgba(91, 138, 76, 0.2);
-        }
-
-        .stat-box .stat-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--plant-green);
-        }
-
-        .stat-box .stat-label {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--sand-mid);
-            margin-top: 0.5rem;
-        }
-
-        .equipment-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .equipment-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: rgba(42, 37, 32, 0.5);
-            border-left: 3px solid var(--plant-green);
-        }
-
-        .equipment-item span {
-            font-size: 0.95rem;
-            color: var(--sand-light);
-        }
-
-        /* Grow Timeline */
-        .grow-timeline {
-            max-width: 900px;
-            margin: 2rem 0;
-        }
-
-        .grow-phase {
-            position: relative;
-            margin-bottom: 1.5rem;
-            padding-left: 2rem;
-            border-left: 2px solid var(--plant-green);
-        }
-
-        .grow-phase.future {
-            border-left-color: var(--sand-dark);
-        }
-
-        .grow-phase-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-
-        .grow-phase-marker {
-            position: absolute;
-            left: -9px;
-            top: 0;
-            width: 16px;
-            height: 16px;
-            background: var(--plant-green);
-            border-radius: 50%;
-            border: 3px solid var(--night-sky);
-        }
-
-        .grow-phase.completed .grow-phase-marker {
-            background: var(--plant-green);
-            box-shadow: 0 0 10px rgba(91, 138, 76, 0.5);
-        }
-
-        .grow-phase.active .grow-phase-marker {
-            animation: growPulse 2s infinite;
-        }
-
-        .grow-phase.future .grow-phase-marker {
-            background: var(--sand-dark);
-        }
-
-        @keyframes growPulse {
-            0%, 100% { box-shadow: 0 0 10px rgba(91, 138, 76, 0.5); }
-            50% { box-shadow: 0 0 20px rgba(91, 138, 76, 0.8); }
-        }
-
-        .grow-phase-header h4 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            color: var(--bone);
-            margin: 0;
-        }
-
-        .grow-phase.future .grow-phase-header h4 {
-            color: var(--sand-dark);
-        }
-
-        .phase-date {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            color: var(--plant-green);
-            background: rgba(91, 138, 76, 0.15);
-            padding: 0.25rem 0.75rem;
-            border-radius: 2px;
-        }
-
-        .grow-phase.future .phase-date {
-            color: var(--sand-dark);
-            background: rgba(196, 165, 116, 0.1);
-        }
-
-        .grow-phase-content {
-            padding: 0.5rem 0 1rem 0;
-        }
-
-        .grow-milestone {
-            display: flex;
-            gap: 1rem;
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.5rem;
-            background: rgba(42, 37, 32, 0.4);
-            border-left: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .grow-milestone:hover {
-            background: rgba(91, 138, 76, 0.1);
-            border-left-color: var(--plant-green);
-        }
-
-        .grow-milestone.current {
-            background: rgba(91, 138, 76, 0.15);
-            border-left: 2px solid var(--plant-green);
-        }
-
-        .milestone-day {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--plant-green);
-            min-width: 60px;
-            flex-shrink: 0;
-        }
-
-        .grow-milestone p {
-            font-size: 0.9rem;
-            color: var(--sand-light);
-            margin: 0;
-            line-height: 1.5;
-        }
-
-        @media (max-width: 768px) {
-            .grow-milestone {
-                flex-direction: column;
-                gap: 0.25rem;
-            }
-
-            .milestone-day {
-                min-width: auto;
-            }
-        }
-
-        /* Grow Room Photo Gallery */
-        .grow-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            grid-auto-rows: 200px;
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .grow-gallery-item {
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(91, 138, 76, 0.2);
-            cursor: pointer;
-            transition: all 0.4s ease;
-        }
-
-        .grow-gallery-item.featured {
-            grid-column: span 2;
-            grid-row: span 2;
-        }
-
-        .grow-gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .grow-gallery-item:hover {
-            border-color: var(--plant-green);
-            box-shadow: 0 0 20px rgba(91, 138, 76, 0.3);
-        }
-
-        .grow-gallery-item:hover img {
-            transform: scale(1.05);
-        }
-
-        .grow-gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1rem;
-            background: linear-gradient(to top, rgba(13, 11, 9, 0.95), transparent);
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .grow-gallery-item:hover .grow-gallery-caption {
-            transform: translateY(0);
-        }
-
-        .caption-day {
-            display: block;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--plant-green);
-            margin-bottom: 0.25rem;
-        }
-
-        .caption-text {
-            display: block;
-            font-size: 0.85rem;
-            color: var(--sand-light);
-        }
-
-        @media (max-width: 768px) {
-            .grow-gallery {
-                grid-template-columns: repeat(2, 1fr);
-                grid-auto-rows: 150px;
-            }
-
-            .grow-gallery-item.featured {
-                grid-column: span 2;
-                grid-row: span 1;
-            }
-
-            .grow-gallery-caption {
-                transform: translateY(0);
-                padding: 0.5rem;
-            }
-
-            .caption-text {
-                font-size: 0.75rem;
-            }
-        }
-
-        /* Contact Section */
-        .contact-section {
-            padding: 6rem 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        /* K10 Restoration Section */
-        .k10-section {
-            background: linear-gradient(180deg, transparent, rgba(181, 69, 42, 0.03), transparent);
-        }
-
-        .k10-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-
-        .k10-stat-box {
-            text-align: center;
-            padding: 1.5rem;
-            background: rgba(181, 69, 42, 0.1);
-            border: 1px solid rgba(181, 69, 42, 0.2);
-        }
-
-        .k10-stat-box .k10-stat-value {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--rust-red);
-        }
-
-        .k10-stat-box .k10-stat-label {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--sand-mid);
-            margin-top: 0.5rem;
-        }
-
-        /* Build Timeline */
-        .build-timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 2rem 0;
-            padding-left: 2rem;
-        }
-
-        .build-timeline::before {
-            content: '';
-            position: absolute;
-            left: 6px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--rust-red), var(--sand-dark), rgba(196, 165, 116, 0.2));
-        }
-
-        .timeline-phase {
-            position: relative;
-            padding: 1rem 0 1.5rem 2rem;
-        }
-
-        .phase-marker {
-            position: absolute;
-            left: -2rem;
-            top: 1.25rem;
-            width: 14px;
-            height: 14px;
-            background: var(--rust-red);
-            border-radius: 50%;
-            border: 3px solid var(--night-sky);
-            box-shadow: 0 0 10px rgba(181, 69, 42, 0.5);
-        }
-
-        .timeline-phase.active .phase-marker {
-            animation: pulse 2s infinite;
-        }
-
-        .timeline-phase.future .phase-marker {
-            background: var(--sand-dark);
-            box-shadow: none;
-        }
-
-        .timeline-phase.future .phase-content {
-            opacity: 0.5;
-        }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 10px rgba(181, 69, 42, 0.5); }
-            50% { box-shadow: 0 0 20px rgba(181, 69, 42, 0.8); }
-        }
-
-        .phase-content h4 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            color: var(--bone);
-            margin-bottom: 0.25rem;
-        }
-
-        .phase-content p {
-            font-size: 0.9rem;
-            color: var(--sand-mid);
-        }
-
-        /* Gallery Filters */
-        .gallery-filters {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .gallery-filter {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 0.6rem 1.2rem;
-            background: transparent;
-            border: 1px solid rgba(196, 165, 116, 0.3);
-            color: var(--sand-mid);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .gallery-filter:hover,
-        .gallery-filter.active {
-            background: rgba(181, 69, 42, 0.2);
-            border-color: var(--rust-red);
-            color: var(--rust-red);
-        }
-
-        /* Photo Gallery Grid */
-        .photo-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            grid-auto-rows: 200px;
-            gap: 1rem;
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            background: rgba(42, 37, 32, 0.6);
-            border: 1px solid rgba(196, 165, 116, 0.15);
-            cursor: pointer;
-            transition: all 0.4s ease;
-        }
-
-        .gallery-item:hover {
-            border-color: var(--rust-red);
-            transform: scale(1.02);
-            z-index: 10;
-        }
-
-        .gallery-item.large {
-            grid-column: span 2;
-            grid-row: span 2;
-        }
-
-        .gallery-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-            text-align: center;
-            background: linear-gradient(145deg, rgba(42, 37, 32, 0.8), rgba(26, 22, 17, 0.95));
-        }
-
-        .gallery-placeholder svg {
-            width: 48px;
-            height: 48px;
-            color: var(--sand-dark);
-            margin-bottom: 1rem;
-            opacity: 0.6;
-        }
-
-        .gallery-placeholder span {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--sand-mid);
-        }
-
-        .gallery-item:hover .gallery-placeholder svg {
-            color: var(--rust-red);
-            opacity: 1;
-        }
-
-        .gallery-item:hover .gallery-placeholder span {
-            color: var(--bone);
-        }
-
-        @media (max-width: 768px) {
-            .photo-gallery {
-                grid-template-columns: repeat(2, 1fr);
-                grid-auto-rows: 150px;
-            }
-            
-            .gallery-item.large {
-                grid-column: span 2;
-                grid-row: span 1;
-            }
-
-            .build-timeline {
-                padding-left: 1.5rem;
-            }
-        }
-
-        .contact-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1px;
-            height: 100px;
-            background: linear-gradient(to bottom, var(--spice-orange), transparent);
-        }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 2rem;
-            background: rgba(42, 37, 32, 0.6);
-            border: 1px solid rgba(196, 165, 116, 0.2);
-            color: var(--sand-light);
-            text-decoration: none;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.85rem;
-            letter-spacing: 0.1em;
-            transition: all 0.3s ease;
-        }
-
-        .contact-link:hover {
-            border-color: var(--spice-orange);
-            background: rgba(212, 116, 12, 0.1);
-            color: var(--spice-orange);
-        }
-
-        .contact-link svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Footer */
-        footer {
-            padding: 3rem 2rem;
-            text-align: center;
-            border-top: 1px solid rgba(196, 165, 116, 0.1);
-        }
-
-        footer p {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            color: var(--sand-dark);
-        }
-
-        .footer-quote {
-            font-family: 'Rajdhani', sans-serif;
-            font-style: italic;
-            font-size: 0.9rem;
-            color: var(--sand-mid);
-            margin-bottom: 1rem;
-        }
-
-        /* Mobile menu */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
-        .mobile-menu-btn span {
-            display: block;
-            width: 25px;
-            height: 2px;
-            background: var(--sand-light);
-            margin: 5px 0;
-            transition: all 0.3s ease;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav {
-                padding: 1rem 1.5rem;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(13, 11, 9, 0.98);
-                flex-direction: column;
-                padding: 2rem;
-                gap: 1.5rem;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .hero h1 {
-                letter-spacing: 0.1em;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-links {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        /* Scroll reveal animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
     <div class="bg-pattern"></div>
@@ -1446,33 +265,32 @@
 
     <div class="divider"></div>
 
-    <!-- Grow Room Section -->
     <section class="section grow-section" id="growroom">
         <span class="section-title">The Grow Room</span>
-        <p class="section-subtitle">Controlled environment cultivation — where science meets patience. Currently growing Planet of the Grapes (V3.0).</p>
+        <p class="section-subtitle" id="grow-subtitle">Controlled environment cultivation — where science meets patience. Currently growing Planet of the Grapes (V3.0).</p>
 
         <div class="grow-stats">
             <div class="stat-box">
-                <div class="stat-value">V3.0</div>
+                <div class="stat-value" id="stat-cycle">V3.0</div>
                 <div class="stat-label">Current Attempt</div>
             </div>
             <div class="stat-box">
-                <div class="stat-value">54</div>
+                <div class="stat-value" id="stat-days">54</div>
                 <div class="stat-label">Days In</div>
             </div>
             <div class="stat-box">
-                <div class="stat-value">6"</div>
+                <div class="stat-value" id="stat-height">6"</div>
                 <div class="stat-label">Current Height</div>
             </div>
             <div class="stat-box">
-                <div class="stat-value">18/6</div>
+                <div class="stat-value" id="stat-stage">18/6</div>
                 <div class="stat-label">Light Schedule</div>
             </div>
         </div>
 
-        <h3 style="font-family: 'Orbitron', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--plant-green); margin: 3rem 0 1.5rem;">CURRENT GROW: PLANET OF THE GRAPES</h3>
+        <h3 id="grow-current-title" style="font-family: 'Orbitron', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--plant-green); margin: 3rem 0 1.5rem;">CURRENT GROW: PLANET OF THE GRAPES</h3>
         
-        <div class="grow-timeline">
+        <div class="grow-timeline" id="grow-timeline">
             <div class="grow-phase completed">
                 <div class="grow-phase-header">
                     <div class="grow-phase-marker"></div>
@@ -1562,121 +380,121 @@
 
         <h3 style="font-family: 'Orbitron', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--plant-green); margin: 3rem 0 1.5rem;">PHOTO GALLERY</h3>
         
-        <div class="grow-gallery">
+        <div class="grow-gallery" id="grow-gallery">
             <div class="grow-gallery-item featured">
-                <img src="images/PXL_20260117_194033032.jpg" alt="Day 54 - Flowering" loading="lazy">
+                <img src="images/grow-room/pxl_20260117_194033032.jpg" alt="Day 54 - Flowering" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 54</span>
                     <span class="caption-text">Full Flowering — Current Status</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20251127_160300135.jpg" alt="Day 2 - Taproot Emergence" loading="lazy">
+                <img src="images/grow-room/pxl_20251127_160300135.jpg" alt="Day 2 - Taproot Emergence" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 2</span>
                     <span class="caption-text">Taproot Emergence</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20251202_221304274.jpg" alt="Day 5 - First Emergence" loading="lazy">
+                <img src="images/grow-room/pxl_20251202_221304274.jpg" alt="Day 5 - First Emergence" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 5</span>
                     <span class="caption-text">Seedling Emerges</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20251202_221253245.jpg" alt="Day 5 - Grow Tent Setup" loading="lazy">
+                <img src="images/grow-room/pxl_20251202_221253245.jpg" alt="Day 5 - Grow Tent Setup" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 5</span>
                     <span class="caption-text">In The Tent</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20251222_000312752.jpg" alt="Day 28 - Top View" loading="lazy">
+                <img src="images/grow-room/pxl_20251222_000312752.jpg" alt="Day 28 - Top View" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 28</span>
                     <span class="caption-text">Symmetrical Growth</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20251222_000302450.jpg" alt="Day 28 - Vegetative Growth" loading="lazy">
+                <img src="images/grow-room/pxl_20251222_000302450.jpg" alt="Day 28 - Vegetative Growth" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 28</span>
                     <span class="caption-text">Vegetative Growth</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20251222_000246004.jpg" alt="Day 28 - Side Profile" loading="lazy">
+                <img src="images/grow-room/pxl_20251222_000246004.jpg" alt="Day 28 - Side Profile" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 28</span>
                     <span class="caption-text">Height: 2.75"</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20251222_000341521.jpg" alt="Day 28 - Healthy Leaves" loading="lazy">
+                <img src="images/grow-room/pxl_20251222_000341521.jpg" alt="Day 28 - Healthy Leaves" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 28</span>
                     <span class="caption-text">Healthy Foliage</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20260105_195223809.jpg" alt="Day 42 - Growth Acceleration" loading="lazy">
+                <img src="images/grow-room/pxl_20260105_195223809.jpg" alt="Day 42 - Growth Acceleration" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 42</span>
                     <span class="caption-text">Height: 4.5"</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20260105_195240485.jpg" alt="Day 42 - Early Flower" loading="lazy">
+                <img src="images/grow-room/pxl_20260105_195240485.jpg" alt="Day 42 - Early Flower" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 42</span>
                     <span class="caption-text">First Signs of Flower</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20260105_195254842.jpg" alt="Day 42 - Full Plant" loading="lazy">
+                <img src="images/grow-room/pxl_20260105_195254842.jpg" alt="Day 42 - Full Plant" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 42</span>
                     <span class="caption-text">Full Plant View</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20260117_193723284.jpg" alt="Day 54 - Bud Development" loading="lazy">
+                <img src="images/grow-room/pxl_20260117_193723284.jpg" alt="Day 54 - Bud Development" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 54</span>
                     <span class="caption-text">Bud Development</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20260117_193926102.jpg" alt="Day 54 - Top Cola" loading="lazy">
+                <img src="images/grow-room/pxl_20260117_193926102.jpg" alt="Day 54 - Top Cola" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 54</span>
                     <span class="caption-text">Top Cola Close-up</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20260117_194113126.jpg" alt="Day 54 - Trichomes" loading="lazy">
+                <img src="images/grow-room/pxl_20260117_194113126.jpg" alt="Day 54 - Trichomes" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 54</span>
                     <span class="caption-text">Trichome Detail</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20260117_194126934.jpg" alt="Day 54 - Node Detail" loading="lazy">
+                <img src="images/grow-room/pxl_20260117_194126934.jpg" alt="Day 54 - Node Detail" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 54</span>
                     <span class="caption-text">Node Sites</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20260117_194211429.jpg" alt="Day 54 - Side Profile" loading="lazy">
+                <img src="images/grow-room/pxl_20260117_194211429.jpg" alt="Day 54 - Side Profile" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 54</span>
                     <span class="caption-text">Side Profile</span>
                 </div>
             </div>
             <div class="grow-gallery-item">
-                <img src="images/PXL_20260117_194224512.jpg" alt="Day 54 - Full Plant Current" loading="lazy">
+                <img src="images/grow-room/pxl_20260117_194224512.jpg" alt="Day 54 - Full Plant Current" loading="lazy">
                 <div class="grow-gallery-caption">
                     <span class="caption-day">Day 54</span>
                     <span class="caption-text">Height: 6"</span>
@@ -2009,92 +827,6 @@
         <p>© 2025 JACKSON BULL • CRAFTED WITH CURIOSITY</p>
     </footer>
 
-    <script>
-        // Create floating particles
-        const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 30; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.top = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 20 + 's';
-            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-            particlesContainer.appendChild(particle);
-        }
-
-        // Mobile menu toggle
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('active');
-        }
-
-        // Scroll reveal
-        const reveals = document.querySelectorAll('.card, .project-card, .sandwich-card, .stat-box');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        reveals.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease';
-            revealObserver.observe(el);
-        });
-
-        // Smooth scroll for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    document.getElementById('navLinks').classList.remove('active');
-                }
-            });
-        });
-
-        // Gallery filter functionality
-        const filterButtons = document.querySelectorAll('.gallery-filter');
-        const galleryItems = document.querySelectorAll('.gallery-item');
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Update active button
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-
-                const filter = button.dataset.filter;
-
-                galleryItems.forEach(item => {
-                    if (filter === 'all' || item.dataset.category === filter) {
-                        item.style.display = 'block';
-                        item.style.opacity = '1';
-                    } else {
-                        item.style.opacity = '0';
-                        setTimeout(() => {
-                            if (!item.dataset.category.includes(filter) && filter !== 'all') {
-                                item.style.display = 'none';
-                            }
-                        }, 300);
-                    }
-                });
-            });
-        });
-    </script>
-<!-- Add this just before </body> in your main index.html -->
-<script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    });
-  }
-</script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

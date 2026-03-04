@@ -13,8 +13,11 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
+      - { label: "Cycle", name: "cycle", widget: "number", default: 4, hint: "Current grow cycle (e.g., 3, 4)" }
+      - { label: "Day", name: "day", widget: "number", hint: "Day number of the grow" }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Strain", name: "strain", widget: "string" }
       - { label: "Stage", name: "stage", widget: "select", options: ["Germination", "Seedling", "Vegetative", "Flowering", "Harvest", "Curing"] }
+      - { label: "Height (inches)", name: "height", widget: "number", required: false, value_type: "float" }
       - { label: "Featured Image", name: "thumbnail", widget: "image", required: false }
       - { label: "Body", name: "body", widget: "markdown" }
