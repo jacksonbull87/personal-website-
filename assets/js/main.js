@@ -101,31 +101,39 @@ async function loadGrowJournal() {
     if (!galleryContainer || !timelineContainer) return;
 
     try {
-        // 1. Fetch file list from GitHub
-        const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${POSTS_PATH}`);
+        // 1. Fetch file list from GitHub (with cache busting)
+        const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${POSTS_PATH}?ref=main&t=${Date.now()}`);
         if (!response.ok) throw new Error('Failed to fetch posts list');
         const files = await response.json();
 
         // 2. Fetch and parse each post
         const posts = await Promise.all(files.filter(f => f.name.endsWith('.md')).map(async (file) => {
-            const res = await fetch(file.download_url);
+            const res = await fetch(`${file.download_url}?t=${Date.now()}`);
             const content = await res.text();
             
-            // Simple Frontmatter Parser
+            // Simple Frontmatter Parser (Case-insensitive & more robust)
             const frontmatterMatch = content.match(/^---\r?\n([\s\S]+?)\r?\n---/);
             if (!frontmatterMatch) return null;
             
             const data = {};
             frontmatterMatch[1].split('\n').forEach(line => {
-                const [key, ...val] = line.split(':');
-                if (key && val) data[key.trim()] = val.join(':').trim();
+                const sepIdx = line.indexOf(':');
+                if (sepIdx !== -1) {
+                    const key = line.substring(0, sepIdx).trim().toLowerCase();
+                    const val = line.substring(sepIdx + 1).trim();
+                    data[key] = val;
+                }
             });
 
             return {
                 ...data,
                 body: content.replace(frontmatterMatch[0], '').trim(),
                 day: parseInt(data.day || 0),
-                cycle: parseFloat(data.cycle || 0)
+                cycle: parseFloat(data.cycle || 0),
+                title: data.title || 'Untitled Update',
+                thumbnail: data.thumbnail || null,
+                strain: data.strain || 'Unknown Strain',
+                stage: data.stage || 'In Progress'
             };
         }));
 
