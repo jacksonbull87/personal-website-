@@ -146,12 +146,14 @@ async function loadGrowJournal() {
         validPosts.forEach((post, index) => {
             if (!post.thumbnail) return;
             
-            // Fix: Ensure the thumbnail path works with GitHub's raw URL
-            let imgPath = post.thumbnail.trim();
-            if (imgPath.startsWith('/')) imgPath = imgPath.substring(1);
-            
-            // Build the absolute GitHub Raw URL for instant loading
-            const finalImgSrc = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/${imgPath}`;
+            let finalImgSrc = post.thumbnail.trim();
+
+            // If it's a relative path (starts with /images or images), use GitHub Raw
+            if (!finalImgSrc.startsWith('http')) {
+                let imgPath = finalImgSrc;
+                if (imgPath.startsWith('/')) imgPath = imgPath.substring(1);
+                finalImgSrc = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/${imgPath}`;
+            }
 
             const item = document.createElement('div');
             item.className = `grow-gallery-item ${index === 0 ? 'featured' : ''}`;
