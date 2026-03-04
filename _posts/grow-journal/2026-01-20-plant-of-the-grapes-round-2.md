@@ -1,5 +1,5 @@
 ---
-title: Plant of the Grapes - Round 2
+title: Day 10
 cycle: 4
 day: 10
 date: 2026-01-29T23:34:00.000-05:00
