@@ -11,6 +11,10 @@ A cohesive personal website showcasing diverse interests across professional, ho
 - **Goal:** Organize images into subfolders (e.g., `/images/grow-room`, `/images/k10-build`) and update links.
 - **Status:** ✅ Completed (Grow Room images moved and links updated).
 
+### 4. Resume Integration
+- **Goal:** Host the professional resume and add download links to the navigation and professional sections.
+- **Status:** ✅ Completed (Hosted in `/assets/docs/Jackson_Bull_Resume.pdf`).
+
 ### 2. CMS Integration
 - **Goal:** Pull content for "Grow Room" and "Sandwich" sections from CMS markdown files instead of hardcoding.
 - **Status:** Pending.
