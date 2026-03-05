@@ -19,6 +19,11 @@ A cohesive personal website showcasing diverse interests across professional, ho
 - **Goal:** Add the Spotify Cultural Trend Analyzer to the project grid and rename 'Professional' to 'Music Data Projects'.
 - **Status:** ✅ Completed.
 
+### 6. Stealth Grow Room Implementation
+- **Goal:** Hide cultivation content from the general public/recruiters while keeping it accessible via URL parameter.
+- **Implementation:** Content is hidden by default (`display: none`) and revealed only if `?show_all=true` is present in the URL.
+- **Status:** ✅ Completed.
+
 ### 2. CMS Integration
 - **Goal:** Pull content for "Grow Room" and "Sandwich" sections from CMS markdown files instead of hardcoding.
 - **Status:** Pending.

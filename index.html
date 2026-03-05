@@ -27,7 +27,7 @@
             <li><a href="#home">Home</a></li>
             <li><a href="#music-data">Music Data Projects</a></li>
             <li><a href="#sandwiches">Sandwiches</a></li>
-            <li><a href="#growroom">Grow Room</a></li>
+            <li id="nav-growroom" style="display: none;"><a href="#growroom">Grow Room</a></li>
             <li><a href="#k10">Chevy K10 Build</a></li>
             <li><a href="#other">Other</a></li>
             <li><a href="assets/docs/Jackson_Bull_Resume.pdf" target="_blank">Resume</a></li>
@@ -92,7 +92,7 @@
                 </div>
             </a>
 
-            <a href="#growroom" class="card card--grow">
+            <a href="#growroom" class="card card--grow" id="card-growroom" style="display: none;">
                 <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <path d="M12 22V8"/>
                     <path d="M12 8c-3-3-8-2-8 3 0 4 5 5 8 2"/>
@@ -245,9 +245,9 @@
         </div>
     </section>
 
-    <div class="divider"></div>
+    <div class="divider" id="divider-growroom" style="display: none;"></div>
 
-    <section class="section grow-section" id="growroom">
+    <section class="section grow-section" id="growroom" style="display: none;">
         <span class="section-title">The Grow Room</span>
         <p class="section-subtitle" id="grow-subtitle">Controlled environment cultivation — where science meets patience. Currently growing Planet of the Grapes (V3.0).</p>
 
@@ -810,5 +810,17 @@
     </footer>
 
     <script src="assets/js/main.js"></script>
+    <script>
+        // Stealth reveal logic
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('show_all') === 'true') {
+                document.getElementById('nav-growroom').style.display = 'block';
+                document.getElementById('card-growroom').style.display = 'flex';
+                document.getElementById('divider-growroom').style.display = 'block';
+                document.getElementById('growroom').style.display = 'block';
+            }
+        });
+    </script>
 </body>
 </html>
