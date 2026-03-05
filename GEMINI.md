@@ -15,6 +15,10 @@ A cohesive personal website showcasing diverse interests across professional, ho
 - **Goal:** Host the professional resume and add download links to the navigation and professional sections.
 - **Status:** ✅ Completed (Hosted in `/assets/docs/Jackson_Bull_Resume.pdf`).
 
+### 5. Spotify Analyzer Integration
+- **Goal:** Add the Spotify Cultural Trend Analyzer to the project grid and rename 'Professional' to 'Music Data Projects'.
+- **Status:** ✅ Completed.
+
 ### 2. CMS Integration
 - **Goal:** Pull content for "Grow Room" and "Sandwich" sections from CMS markdown files instead of hardcoding.
 - **Status:** Pending.
