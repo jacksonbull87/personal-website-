@@ -268,8 +268,86 @@ async function loadSandwiches() {
     }
 }
 
+// AI Morning Blueprint Animation Logic
+function initBlueprintAnimation() {
+    const terminalBody = document.getElementById('terminal-body');
+    const soulContent = document.getElementById('soul-content');
+    const soulText = document.getElementById('soul-text');
+    const blueprintComponent = document.getElementById('blueprint-component');
+
+    if (!terminalBody || !soulContent || !soulText || !blueprintComponent) return;
+
+    const terminalLines = [
+        { tag: '[SYSTEM]', text: 'Initializing Blueprint Coach...' },
+        { tag: '[SCAN]', text: 'Scanning /Career/GEMINI.md... Found 9 active projects.' },
+        { tag: '[ANALYSIS]', text: 'Parsing professional_history.pdf... Context depth: High.' },
+        { tag: '[IDENTITY]', text: 'Weighting: "Hacker at Heart" | Vision: 98%' },
+        { tag: '[COORDINATE]', text: 'Correlating US Spotify Trends with release backlog...' },
+        { tag: '[ACTION]', text: 'Synthesizing motivation matrix...' },
+        { tag: '[STATUS]', text: 'Dispatching via Google Fi SMS Gateway...' }
+    ];
+
+    const pepTalk = "Jackson. You are the one who sees the signal in the noise when the charts look like chaos. You’ve built the skunkworks at Warner and solved the Sombr puzzle; today is just another block in the architecture. Own the frequency.";
+
+    let terminalIndex = 0;
+    let hasStarted = false;
+
+    const runAnimation = () => {
+        if (hasStarted) return;
+        hasStarted = true;
+
+        const addTerminalLine = () => {
+            if (terminalIndex < terminalLines.length) {
+                const line = terminalLines[terminalIndex];
+                const lineEl = document.createElement('div');
+                lineEl.className = 'terminal-line';
+                lineEl.innerHTML = `<span class="tag">${line.tag}</span> ${line.text}`;
+                terminalBody.appendChild(lineEl);
+                
+                // Trigger reflow for animation
+                setTimeout(() => lineEl.classList.add('visible'), 50);
+                
+                terminalIndex++;
+                setTimeout(addTerminalLine, 600);
+            } else {
+                // Terminal finished, show soul
+                setTimeout(showSoul, 500);
+            }
+        };
+
+        const showSoul = () => {
+            soulContent.classList.add('visible');
+            typeSoulText();
+        };
+
+        const typeSoulText = () => {
+            let charIndex = 0;
+            const type = () => {
+                if (charIndex < pepTalk.length) {
+                    soulText.textContent += pepTalk.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(type, 30);
+                }
+            };
+            type();
+        };
+
+        addTerminalLine();
+    };
+
+    // Use Intersection Observer to trigger when visible
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            runAnimation();
+        }
+    }, { threshold: 0.5 });
+
+    observer.observe(blueprintComponent);
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     loadGrowJournal();
     loadSandwiches();
+    initBlueprintAnimation();
 });

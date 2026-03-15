@@ -28,7 +28,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500&family=Space+Mono:wght@400;700&family=Lora:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -520,11 +520,33 @@
         <p class="section-subtitle">A miscellaneous collection of code experiments and technical explorations.</p>
 
         <div class="projects-grid">
-            <div class="project-card">
+            <div class="project-card" style="grid-column: 1 / -1;">
                 <h4>AI Morning Blueprint</h4>
                 <span class="project-type">Automation / GenAI / Cloud</span>
-                <p>A hyper-personalized coach delivering context-aware morning pep talks. The system scans a dynamic project dashboard to stay informed of recent technical wins, combining real-time progress with insights from a 20-page professional background check (PreEmployCompReport.pdf) to anchor my mindset. Messages are dispatched via a Google Fi Email-to-SMS gateway, appearing as native notifications on my Pixel 10 XL Pro.</p>
-                <div class="tech-stack">
+                <p>A hyper-personalized coach delivering context-aware morning pep talks. The system scans a dynamic project dashboard to stay informed of recent technical wins, combining real-time progress with insights from professional history to anchor my mindset. Messages are dispatched via a Google Fi Email-to-SMS gateway, appearing as native notifications on my Pixel 10 XL Pro.</p>
+                
+                <div class="blueprint-container" id="blueprint-component">
+                    <div class="blueprint-terminal">
+                        <div class="terminal-header">
+                            <div class="dot dot-red"></div>
+                            <div class="dot dot-yellow"></div>
+                            <div class="dot dot-green"></div>
+                        </div>
+                        <div class="terminal-body" id="terminal-body">
+                            <!-- Lines will be injected by JS -->
+                        </div>
+                    </div>
+                    <div class="blueprint-soul">
+                        <div class="soul-content" id="soul-content">
+                            <span class="soul-header">Morning Blueprint // 07:25 AM ET</span>
+                            <p class="soul-text" id="soul-text">
+                                <!-- Text will be typed by JS -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tech-stack" style="margin-top: 2rem;">
                     <span class="tech">Gemini 2.0 Flash</span>
                     <span class="tech">Python</span>
                     <span class="tech">Google Fi Gateway</span>
