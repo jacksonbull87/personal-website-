@@ -205,7 +205,71 @@ async function loadGrowJournal() {
     }
 }
 
+// Dynamic Sandwich Loader
+async function loadSandwiches() {
+    const GITHUB_REPO = 'jacksonbull87/personal-website-';
+    const POSTS_PATH = '_posts/sandwiches';
+    const sandwichContainer = document.getElementById('sandwich-list');
+    
+    if (!sandwichContainer) return;
+
+    try {
+        const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${POSTS_PATH}?ref=main&t=${Date.now()}`);
+        if (!response.ok) throw new Error('Failed to fetch sandwiches list');
+        const files = await response.json();
+
+        const sandwiches = await Promise.all(files.filter(f => f.name.endsWith('.md')).map(async (file) => {
+            const res = await fetch(`${file.download_url}?t=${Date.now()}`);
+            const content = await res.text();
+            
+            const frontmatterMatch = content.match(/^---\r?\n([\s\S]+?)\r?\n---/);
+            if (!frontmatterMatch) return null;
+            
+            const data = {};
+            frontmatterMatch[1].split('\n').forEach(line => {
+                const sepIdx = line.indexOf(':');
+                if (sepIdx !== -1) {
+                    const key = line.substring(0, sepIdx).trim().toLowerCase();
+                    const val = line.substring(sepIdx + 1).trim();
+                    data[key] = val;
+                }
+            });
+
+            return {
+                ...data,
+                rank: parseInt(data.rank || 99),
+                rating: data.rating || 'N/A',
+                title: data.title || 'Untitled Sandwich',
+                description: data.description || ''
+            };
+        }));
+
+        const validSandwiches = sandwiches.filter(s => s !== null).sort((a, b) => a.rank - b.rank);
+        if (validSandwiches.length === 0) return;
+
+        sandwichContainer.innerHTML = '';
+        validSandwiches.forEach(s => {
+            const card = document.createElement('div');
+            card.className = 'sandwich-card';
+            card.dataset.rank = s.rank.toString().padStart(2, '0');
+            card.innerHTML = `
+                <h4>${s.title}</h4>
+                <span class="score">Bull Rating: ${s.rating} / 10</span>
+                <p>${s.description}</p>
+            `;
+            sandwichContainer.appendChild(card);
+            
+            // Re-observe for scroll reveal
+            revealObserver.observe(card);
+        });
+
+    } catch (error) {
+        console.error('Error loading sandwiches:', error);
+    }
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     loadGrowJournal();
+    loadSandwiches();
 });

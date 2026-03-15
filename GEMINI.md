@@ -26,11 +26,11 @@ A cohesive personal website showcasing diverse interests across professional, ho
 
 ### 2. CMS Integration
 - **Goal:** Pull content for "Grow Room" and "Sandwich" sections from CMS markdown files instead of hardcoding.
-- **Status:** Pending.
+- **Status:** ✅ Completed (Implemented dynamic fetching from GitHub API in `main.js`).
 
 ### 3. SEO & Metadata
 - **Goal:** Improve meta tags and social sharing previews.
-- **Status:** Pending.
+- **Status:** ✅ Completed (Added Open Graph and Twitter meta tags to `index.html`).
 
 ## 📝 Project Notes
 - **Focus:** Professional portfolio, Grow Room journals, K10 restoration, and Sandwich reviews.

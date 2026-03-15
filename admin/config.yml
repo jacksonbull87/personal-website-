@@ -21,3 +21,16 @@ collections:
       - { label: "Height (inches)", name: "height", widget: "number", required: false, value_type: "float" }
       - { label: "Featured Image", name: "thumbnail", widget: "image", required: false }
       - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "sandwiches"
+    label: "Sandwich Adventures"
+    folder: "_posts/sandwiches"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Bull Rating", name: "rating", widget: "number", value_type: "float", min: 0, max: 10, step: 0.1 }
+      - { label: "Rank", name: "rank", widget: "number", hint: "Rank in the Hall of Fame (1-5)" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Featured Image", name: "thumbnail", widget: "image", required: false }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
