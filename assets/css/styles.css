@@ -350,6 +350,44 @@ nav {
     border-color: var(--border);
 }
 
+.milestone-body {
+    margin-top: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.milestone-body p {
+    margin-bottom: 1rem;
+}
+
+.milestone-body ul, .milestone-body ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.2rem;
+}
+
+.milestone-body li {
+    margin-bottom: 0.5rem;
+}
+
+.milestone-body strong {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.milestone-body img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2rem 0;
+    border: 1px solid var(--border);
+    transition: transform 0.3s ease;
+}
+
+.milestone-body img:hover {
+    transform: scale(1.02);
+}
+
 /* AI Morning Blueprint Component */
 .blueprint-container {
     margin-top: 3rem;

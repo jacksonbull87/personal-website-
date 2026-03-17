@@ -175,26 +175,43 @@ async function loadGrowJournal() {
             galleryContainer.appendChild(item);
         });
 
-        // 5. Update Timeline (Simplified for now)
-        // We could group by phase, but for now we'll just show the latest milestones
+        // 5. Update Timeline
         timelineContainer.innerHTML = '';
         const phases = [...new Set(validPosts.map(p => p.stage))];
         phases.forEach(phase => {
             const phasePosts = validPosts.filter(p => p.stage === phase);
             const phaseDiv = document.createElement('div');
             phaseDiv.className = 'grow-phase active';
+
+            // Function to fix image paths in Markdown body
+            const fixBodyImages = (body) => {
+                // Find all ![alt](path) and replace relative paths with GitHub raw URLs
+                return body.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, path) => {
+                    let finalPath = path.trim();
+                    if (!finalPath.startsWith('http')) {
+                        if (finalPath.startsWith('/')) finalPath = finalPath.substring(1);
+                        finalPath = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/${finalPath}`;
+                    }
+                    return `![${alt}](${finalPath})`;
+                });
+            };
+
             phaseDiv.innerHTML = `
                 <div class="grow-phase-header">
                     <div class="grow-phase-marker"></div>
                     <h4>${phase}</h4>
                 </div>
                 <div class="grow-phase-content">
-                    ${phasePosts.map(p => `
-                        <div class="grow-milestone ${p === latest ? 'current' : ''}">
-                            <span class="milestone-day">Day ${p.day}</span>
-                            <p>${p.body.substring(0, 150)}${p.body.length > 150 ? '...' : ''}</p>
-                        </div>
-                    `).join('')}
+                    ${phasePosts.map(p => {
+                        const processedBody = fixBodyImages(p.body);
+                        const htmlContent = typeof marked !== 'undefined' ? marked.parse(processedBody) : `<p>${processedBody}</p>`;
+                        return `
+                            <div class="grow-milestone ${p === latest ? 'current' : ''}">
+                                <span class="milestone-day">Day ${p.day}</span>
+                                <div class="milestone-body">${htmlContent}</div>
+                            </div>
+                        `;
+                    }).join('')}
                 </div>
             `;
             timelineContainer.appendChild(phaseDiv);
