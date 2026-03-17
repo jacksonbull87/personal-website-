@@ -621,3 +621,60 @@ footer p {
     .blueprint-soul { padding: 2rem; }
     .soul-text { font-size: 1.1rem; }
 }
+
+/* Grow Room Photo Gallery - Optimized for 50% Size */
+.grow-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-auto-rows: 100px;
+    gap: 0.5rem;
+    margin: 2rem 0;
+}
+
+.grow-gallery-item {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.grow-gallery-item.featured {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.grow-gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.grow-gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.grow-gallery-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    font-size: 0.6rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.grow-gallery-item:hover .grow-gallery-caption {
+    opacity: 1;
+}
+
+.caption-day {
+    color: var(--accent);
+    font-weight: bold;
+    display: block;
+    font-family: 'Space Mono', monospace;
+}
