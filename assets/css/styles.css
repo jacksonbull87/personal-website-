@@ -672,6 +672,18 @@ footer p {
     opacity: 1;
 }
 
+.grow-gallery-item.expanded {
+    transform: scale(1.25);
+    z-index: 100;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-color: var(--accent);
+}
+
+.grow-gallery-item.expanded .grow-gallery-caption {
+    opacity: 1;
+    font-size: 0.8rem;
+}
+
 .caption-day {
     color: var(--accent);
     font-weight: bold;

@@ -172,7 +172,26 @@ async function loadGrowJournal() {
                     <span class="caption-text">${post.title}</span>
                 </div>
             `;
+
+            // Click to expand by 25%
+            item.addEventListener('click', (e) => {
+                // Close any other expanded items first
+                document.querySelectorAll('.grow-gallery-item.expanded').forEach(el => {
+                    if (el !== item) el.classList.remove('expanded');
+                });
+                // Toggle expansion on the clicked item
+                item.classList.toggle('expanded');
+                e.stopPropagation();
+            });
+
             galleryContainer.appendChild(item);
+        });
+
+        // Close expanded items if clicking anywhere else
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.grow-gallery-item.expanded').forEach(el => {
+                el.classList.remove('expanded');
+            });
         });
 
         // 5. Update Timeline
