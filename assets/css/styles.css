@@ -673,15 +673,42 @@ footer p {
 }
 
 .grow-gallery-item.expanded {
-    transform: scale(1.25);
-    z-index: 100;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    border-color: var(--accent);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    width: auto;
+    height: 85vh;
+    max-width: 90vw;
+    z-index: 1000;
+    box-shadow: 0 0 100px rgba(0,0,0,0.8);
+    border: 2px solid var(--accent);
+    cursor: zoom-out;
+}
+
+/* Backdrop for Expanded View */
+.grow-gallery-item.expanded::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 200vh;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: -1;
+    transform: translate(-50%, -50%);
+}
+
+.grow-gallery-item.expanded img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
 }
 
 .grow-gallery-item.expanded .grow-gallery-caption {
     opacity: 1;
-    font-size: 0.8rem;
+    font-size: 1rem;
+    padding: 2rem;
 }
 
 .caption-day {

@@ -173,25 +173,30 @@ async function loadGrowJournal() {
                 </div>
             `;
 
-            // Click to expand by 25%
+            // Lightbox Style Expansion
             item.addEventListener('click', (e) => {
-                // Close any other expanded items first
-                document.querySelectorAll('.grow-gallery-item.expanded').forEach(el => {
-                    if (el !== item) el.classList.remove('expanded');
-                });
-                // Toggle expansion on the clicked item
-                item.classList.toggle('expanded');
                 e.stopPropagation();
+                const isExpanded = item.classList.contains('expanded');
+                
+                // Close all others
+                document.querySelectorAll('.grow-gallery-item.expanded').forEach(el => {
+                    el.classList.remove('expanded');
+                });
+
+                if (!isExpanded) {
+                    item.classList.add('expanded');
+                }
             });
 
             galleryContainer.appendChild(item);
         });
 
-        // Close expanded items if clicking anywhere else
-        document.addEventListener('click', () => {
-            document.querySelectorAll('.grow-gallery-item.expanded').forEach(el => {
-                el.classList.remove('expanded');
-            });
+        // Global Close on Background Click
+        document.addEventListener('click', (e) => {
+            const expanded = document.querySelector('.grow-gallery-item.expanded');
+            if (expanded && !expanded.contains(e.target)) {
+                expanded.classList.remove('expanded');
+            }
         });
 
         // 5. Update Timeline
