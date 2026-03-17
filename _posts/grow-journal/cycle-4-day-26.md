@@ -8,3 +8,9 @@ stage: Vegetative
 thumbnail: /images/uploads/pxl_20260214_203905994.jpg
 ---
 Valentine's Day update. She's getting bushy! The nodes are close and tight. I might consider topping in the next 7-10 days to maximize canopy space. 
+
+**Stats:**
+- **Lighting:** 18/6 schedule.
+- **Watering:** 1 pint every 2-3 days.
+
+![Day 26 Veg](/images/uploads/pxl_20260214_203905994.jpg)

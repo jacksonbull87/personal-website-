@@ -8,3 +8,5 @@ stage: Germination
 thumbnail: /images/uploads/pxl_20260119_193409440.jpg
 ---
 Cycle 4 officially begins. Planting 'Planet of the Grapes' today. Focused on maintaining 75-80% humidity for the initial sprout.
+
+![Day 0 Planting](/images/uploads/pxl_20260119_193409440.jpg)

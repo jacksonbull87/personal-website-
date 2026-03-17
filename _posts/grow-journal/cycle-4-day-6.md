@@ -8,3 +8,5 @@ stage: Sprout
 thumbnail: /images/uploads/pxl_20260125_012928619.jpg
 ---
 We have a sprout! First set of cotyledons visible. Lowering humidity slightly to 70% and ensuring the light distance is optimal to prevent stretching.
+
+![Day 6 Sprout](/images/uploads/pxl_20260125_012928619.jpg)
