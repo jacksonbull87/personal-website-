@@ -388,6 +388,26 @@ nav {
     transform: scale(1.02);
 }
 
+/* Side-by-side Images */
+.image-row {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.image-row img {
+    flex: 1;
+    min-width: 250px;
+    margin: 0 !important;
+}
+
+@media (max-width: 600px) {
+    .image-row {
+        flex-direction: column;
+    }
+}
+
 /* AI Morning Blueprint Component */
 .blueprint-container {
     margin-top: 3rem;
