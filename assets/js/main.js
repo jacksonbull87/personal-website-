@@ -209,8 +209,8 @@ async function loadGrowJournal() {
 
             // Function to fix image paths in Markdown body
             const fixBodyImages = (body) => {
-                // Find all ![alt](path) and replace relative paths with GitHub raw URLs
-                return body.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, path) => {
+                // 1. Handle standard Markdown images ![alt](path)
+                let processed = body.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, path) => {
                     let finalPath = path.trim();
                     if (!finalPath.startsWith('http')) {
                         if (finalPath.startsWith('/')) finalPath = finalPath.substring(1);
@@ -218,6 +218,18 @@ async function loadGrowJournal() {
                     }
                     return `![${alt}](${finalPath})`;
                 });
+
+                // 2. Handle <img> tags if any exist (for compatibility)
+                processed = processed.replace(/<img src="(.*?)"(.*?)>/g, (match, src, rest) => {
+                    let finalSrc = src.trim();
+                    if (!finalSrc.startsWith('http')) {
+                        if (finalSrc.startsWith('/')) finalSrc = finalSrc.substring(1);
+                        finalSrc = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/${finalSrc}`;
+                    }
+                    return `<img src="${finalSrc}"${rest}>`;
+                });
+
+                return processed;
             };
 
             phaseDiv.innerHTML = `
@@ -228,7 +240,15 @@ async function loadGrowJournal() {
                 <div class="grow-phase-content">
                     ${phasePosts.map(p => {
                         const processedBody = fixBodyImages(p.body);
-                        const htmlContent = typeof marked !== 'undefined' ? marked.parse(processedBody) : `<p>${processedBody}</p>`;
+                        
+                        // Use marked if available, otherwise fallback to simple replacement
+                        let htmlContent = '';
+                        if (typeof marked !== 'undefined') {
+                            htmlContent = marked.parse(processedBody);
+                        } else {
+                            htmlContent = `<p>${processedBody.replace(/\n/g, '<br>')}</p>`;
+                        }
+
                         return `
                             <div class="grow-milestone ${p === latest ? 'current' : ''}">
                                 <span class="milestone-day">Day ${p.day}</span>
