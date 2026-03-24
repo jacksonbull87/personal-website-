@@ -209,14 +209,17 @@ async function loadGrowJournal() {
 
             // Function to fix image paths in Markdown body
             const fixBodyImages = (body) => {
-                // 1. Handle standard Markdown images ![alt](path)
-                let processed = body.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, path) => {
+                let processed = body;
+                
+                // 1. Handle standard Markdown images ![alt](path) and convert to HTML <img>
+                processed = processed.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, path) => {
                     let finalPath = path.trim();
                     if (!finalPath.startsWith('http')) {
                         if (finalPath.startsWith('/')) finalPath = finalPath.substring(1);
                         finalPath = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/${finalPath}`;
                     }
-                    return `![${alt}](${finalPath})`;
+                    // Wrap with standard styling
+                    return `<img src="${finalPath}" alt="${alt}" loading="lazy" style="max-width: 100%; height: auto; border-radius: 4px;">`;
                 });
 
                 // 2. Handle <img> tags if any exist (for compatibility)
@@ -243,9 +246,21 @@ async function loadGrowJournal() {
                         
                         // Use marked if available, otherwise fallback to simple replacement
                         let htmlContent = '';
-                        if (typeof marked !== 'undefined') {
-                            htmlContent = marked.parse(processedBody);
-                        } else {
+                        try {
+                            if (typeof marked !== 'undefined') {
+                                // marked v4+ can be marked.marked or just marked.parse
+                                if (typeof marked.parse === 'function') {
+                                    htmlContent = marked.parse(processedBody);
+                                } else if (typeof marked === 'function') {
+                                    htmlContent = marked(processedBody);
+                                } else {
+                                    htmlContent = `<p>${processedBody.replace(/\n/g, '<br>')}</p>`;
+                                }
+                            } else {
+                                htmlContent = `<p>${processedBody.replace(/\n/g, '<br>')}</p>`;
+                            }
+                        } catch (e) {
+                            console.error('Marked parsing error:', e);
                             htmlContent = `<p>${processedBody.replace(/\n/g, '<br>')}</p>`;
                         }
 
