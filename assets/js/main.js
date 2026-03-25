@@ -151,6 +151,18 @@ async function loadGrowJournal() {
 
         // 4. Update Gallery
         galleryContainer.innerHTML = '';
+
+        // Add Navigation Arrows
+        const leftArrow = document.createElement('button');
+        leftArrow.className = 'gallery-nav gallery-nav--left';
+        leftArrow.innerHTML = '&#10094;';
+        const rightArrow = document.createElement('button');
+        rightArrow.className = 'gallery-nav gallery-nav--right';
+        rightArrow.innerHTML = '&#10095;';
+        
+        galleryContainer.parentElement.appendChild(leftArrow);
+        galleryContainer.parentElement.appendChild(rightArrow);
+
         validPosts.forEach((post, index) => {
             if (!post.thumbnail) return;
             
@@ -185,17 +197,62 @@ async function loadGrowJournal() {
 
                 if (!isExpanded) {
                     item.classList.add('expanded');
+                    document.body.classList.add('has-expanded');
+                } else {
+                    document.body.classList.remove('has-expanded');
                 }
             });
 
             galleryContainer.appendChild(item);
         });
 
+        // Navigation Logic
+        const rotateGallery = (direction) => {
+            const items = Array.from(document.querySelectorAll('.grow-gallery-item'));
+            const currentIndex = items.findIndex(item => item.classList.contains('expanded'));
+            if (currentIndex === -1) return;
+
+            let nextIndex;
+            if (direction === 'next') {
+                nextIndex = (currentIndex + 1) % items.length;
+            } else {
+                nextIndex = (currentIndex - 1 + items.length) % items.length;
+            }
+
+            items[currentIndex].classList.remove('expanded');
+            items[nextIndex].classList.add('expanded');
+        };
+
+        leftArrow.addEventListener('click', (e) => {
+            e.stopPropagation();
+            rotateGallery('prev');
+        });
+
+        rightArrow.addEventListener('click', (e) => {
+            e.stopPropagation();
+            rotateGallery('next');
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (!document.body.classList.contains('has-expanded')) return;
+            
+            if (e.key === 'ArrowLeft') rotateGallery('prev');
+            if (e.key === 'ArrowRight') rotateGallery('next');
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.grow-gallery-item.expanded').forEach(el => {
+                    el.classList.remove('expanded');
+                });
+                document.body.classList.remove('has-expanded');
+            }
+        });
+
         // Global Close on Background Click
         document.addEventListener('click', (e) => {
             const expanded = document.querySelector('.grow-gallery-item.expanded');
-            if (expanded && !expanded.contains(e.target)) {
+            if (expanded && !expanded.contains(e.target) && !e.target.classList.contains('gallery-nav')) {
                 expanded.classList.remove('expanded');
+                document.body.classList.remove('has-expanded');
             }
         });
 

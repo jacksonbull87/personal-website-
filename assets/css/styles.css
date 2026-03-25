@@ -717,3 +717,52 @@ footer p {
     display: block;
     font-family: 'Space Mono', monospace;
 }
+
+/* Gallery Navigation Arrows */
+.gallery-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #C4A574;
+    border: 1px solid #C4A574;
+    font-size: 2rem;
+    padding: 0;
+    cursor: pointer;
+    z-index: 1001;
+    display: none;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-nav:hover {
+    background: #C4A574;
+    color: #121212;
+}
+
+.gallery-nav--left {
+    left: 30px;
+}
+
+.gallery-nav--right {
+    right: 30px;
+}
+
+/* Show arrows ONLY when something is expanded */
+body.has-expanded .gallery-nav {
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .gallery-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+    .gallery-nav--left { left: 10px; }
+    .gallery-nav--right { right: 10px; }
+}
