@@ -412,11 +412,11 @@ function initBlueprintAnimation() {
 
     const terminalLines = [
         { tag: '[SYSTEM]', text: 'Initializing Blueprint Coach...' },
-        { tag: '[SCAN]', text: 'Scanning /Career/GEMINI.md... Found 9 active projects.' },
-        { tag: '[ANALYSIS]', text: 'Parsing professional_history.pdf... Context depth: High.' },
-        { tag: '[IDENTITY]', text: 'Weighting: "Hacker at Heart" | Vision: 98%' },
-        { tag: '[COORDINATE]', text: 'Correlating US Spotify Trends with release backlog...' },
-        { tag: '[ACTION]', text: 'Synthesizing motivation matrix...' },
+        { tag: '[AUTH]', text: 'Refreshing Fitbit OAuth via GCS Vault...' },
+        { tag: '[SCAN]', text: 'Syncing physical momentum: Weight & Goals...' },
+        { tag: '[ANALYSIS]', text: 'Parsing /Projects/ Cultural Trend Radar... Context depth: High.' },
+        { tag: '[IDENTITY]', text: 'Weighting: "Hacker at Heart" | Momentum: Positive' },
+        { tag: '[ACTION]', text: 'Synthesizing tech-noir motivation matrix...' },
         { tag: '[STATUS]', text: 'Dispatching via Google Fi SMS Gateway...' }
     ];
 
