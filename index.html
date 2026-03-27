@@ -561,15 +561,13 @@
             <div class="project-card">
                 <div class="project-card-visual visual-cliff">
                     <div class="visual-grid"></div>
-                    <div class="visual-label" style="top: 10px; left: 10px;">[ SCALE: LOG10 ]</div>
-                    <div class="visual-label" style="bottom: 10px; right: 10px;">WEEK 1 - 52</div>
-                    <div class="visual-label" style="top: 25px; left: 15px; color: var(--accent); opacity: 0.8;">100%</div>
-                    <div class="visual-label" style="bottom: 35px; left: 15px; color: var(--accent); opacity: 0.8;">20%</div>
+                    <div class="visual-label" style="top: 10px; left: 10px;">[ DECAY_DELTA: -72.4% ]</div>
+                    <div class="visual-label" style="bottom: 10px; right: 10px;">T+7 DAYS</div>
                     <svg viewBox="0 0 200 100" preserveAspectRatio="none">
-                        <path class="cliff-line" d="M0,20 L50,20 L70,85 L150,95 L200,95" />
-                        <circle class="cliff-point" cx="50" cy="20" r="2" />
-                        <circle class="cliff-point" cx="70" cy="85" r="2" style="animation-delay: 1.5s;"/>
-                        <line x1="70" y1="0" x2="70" y2="100" stroke="rgba(196, 165, 116, 0.2)" stroke-width="1" stroke-dasharray="2,2" />
+                        <!-- Healthy Benchmark (30% Decay) -->
+                        <path class="decay-benchmark" d="M0,20 C40,20 60,35 200,45" />
+                        <!-- The Cliff (75% Decay) -->
+                        <path class="decay-cliff" d="M0,20 L60,20 L85,85 L200,90" />
                     </svg>
                     <div class="visual-scanline"></div>
                 </div>
@@ -586,16 +584,24 @@
             <div class="project-card">
                 <div class="project-card-visual visual-halo">
                     <div class="visual-grid"></div>
-                    <div class="visual-label" style="top: 10px; left: 10px;">[ TARGET: VIRAL_CORE ]</div>
-                    <div class="visual-label" style="bottom: 10px; right: 10px;">RIPPLE_RADIUS: 4.8X</div>
-                    <div class="halo-center"></div>
-                    <div class="halo-ring" style="animation-delay: 0s;"></div>
-                    <div class="halo-ring" style="animation-delay: 1s;"></div>
-                    <div class="halo-ring" style="animation-delay: 2s;"></div>
-                    <!-- Data Nodes -->
-                    <div class="halo-data-node" style="top: 30%; left: 40%;"></div>
-                    <div class="halo-data-node" style="top: 60%; left: 70%;"></div>
-                    <div class="halo-data-node" style="top: 80%; left: 20%;"></div>
+                    <div class="visual-label" style="top: 10px; left: 10px;">[ HALO_DISTRIBUTION: +284% ]</div>
+                    <div class="visual-label" style="bottom: 10px; right: 10px;">VOLUME_TRANSFER: ACTIVE</div>
+                    
+                    <!-- Network Logic -->
+                    <div class="halo-node center" style="top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                    
+                    <div class="halo-link" style="top: 50%; left: 50%; width: 60px; transform: rotate(-45deg);"></div>
+                    <div class="halo-node child" style="top: 25%; left: 70%;"></div>
+                    
+                    <div class="halo-link" style="top: 50%; left: 50%; width: 40px; transform: rotate(15deg);"></div>
+                    <div class="halo-node child" style="top: 55%; left: 75%;"></div>
+                    
+                    <div class="halo-link" style="top: 50%; left: 50%; width: 50px; transform: rotate(160deg);"></div>
+                    <div class="halo-node child" style="top: 70%; left: 30%;"></div>
+                    
+                    <div class="halo-link" style="top: 50%; left: 50%; width: 45px; transform: rotate(-120deg);"></div>
+                    <div class="halo-node child" style="top: 20%; left: 35%;"></div>
+                    
                     <div class="visual-scanline"></div>
                 </div>
                 <h4>Cultural Forensic Reports</h4>
