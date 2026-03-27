@@ -527,44 +527,58 @@ nav {
 
 /* Curiosity Card Visuals */
 .project-card-visual {
-    height: 120px;
+    height: 160px; /* Increased height for more data detail */
     margin-bottom: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(196, 165, 116, 0.05);
+    background: #0D0F12;
+    border: 1px solid var(--border);
     overflow: hidden;
     position: relative;
 }
 
+.visual-grid {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        linear-gradient(rgba(196, 165, 116, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(196, 165, 116, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+}
+
+.visual-label {
+    position: absolute;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--accent);
+    opacity: 0.4;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
 /* The Cliff (Danger Zone) */
 .visual-cliff svg {
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 70%;
+    z-index: 1;
 }
 
 .cliff-line {
     stroke: var(--accent);
-    stroke-width: 2;
+    stroke-width: 1.5;
     fill: none;
     stroke-dasharray: 400;
     stroke-dashoffset: 400;
     animation: drawLine 3s ease-out forwards;
+    filter: drop-shadow(0 0 5px var(--accent-glow));
 }
 
-.cliff-area {
-    fill: linear-gradient(to bottom, rgba(196, 165, 116, 0.1), transparent);
+.cliff-point {
+    fill: var(--accent);
     opacity: 0;
-    animation: fadeIn 1s 2s ease-out forwards;
-}
-
-@keyframes drawLine {
-    to { stroke-dashoffset: 0; }
-}
-
-@keyframes fadeIn {
-    to { opacity: 1; }
+    animation: fadeIn 0.5s forwards;
 }
 
 /* The Halo (Forensics) */
@@ -572,6 +586,15 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.halo-center {
+    width: 4px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent);
+    z-index: 2;
 }
 
 .halo-ring {
@@ -582,13 +605,33 @@ nav {
     animation: ripple 4s infinite cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.halo-ring:nth-child(1) { width: 20px; height: 20px; animation-delay: 0s; }
-.halo-ring:nth-child(2) { width: 20px; height: 20px; animation-delay: 1s; }
-.halo-ring:nth-child(3) { width: 20px; height: 20px; animation-delay: 2s; }
+.halo-data-node {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--accent);
+    opacity: 0.6;
+}
 
 @keyframes ripple {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(6); opacity: 0; }
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(8); opacity: 0; }
+}
+
+/* Scanline Effect */
+.visual-scanline {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(
+        to bottom,
+        transparent 50%,
+        rgba(0, 0, 0, 0.2) 51%,
+        transparent 51%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.3;
 }
 
 /* Existing Project Styling */

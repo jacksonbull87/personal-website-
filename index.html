@@ -560,10 +560,18 @@
 
             <div class="project-card">
                 <div class="project-card-visual visual-cliff">
+                    <div class="visual-grid"></div>
+                    <div class="visual-label" style="top: 10px; left: 10px;">[ SCALE: LOG10 ]</div>
+                    <div class="visual-label" style="bottom: 10px; right: 10px;">WEEK 1 - 52</div>
+                    <div class="visual-label" style="top: 25px; left: 15px; color: var(--accent); opacity: 0.8;">100%</div>
+                    <div class="visual-label" style="bottom: 35px; left: 15px; color: var(--accent); opacity: 0.8;">20%</div>
                     <svg viewBox="0 0 200 100" preserveAspectRatio="none">
                         <path class="cliff-line" d="M0,20 L50,20 L70,85 L150,95 L200,95" />
-                        <path class="cliff-area" d="M0,20 L50,20 L70,85 L150,95 L200,95 L200,100 L0,100 Z" style="fill: rgba(196, 165, 116, 0.05);"/>
+                        <circle class="cliff-point" cx="50" cy="20" r="2" />
+                        <circle class="cliff-point" cx="70" cy="85" r="2" style="animation-delay: 1.5s;"/>
+                        <line x1="70" y1="0" x2="70" y2="100" stroke="rgba(196, 165, 116, 0.2)" stroke-width="1" stroke-dasharray="2,2" />
                     </svg>
+                    <div class="visual-scanline"></div>
                 </div>
                 <h4>The Programmed Danger Zone</h4>
                 <span class="project-type">Predictive Modeling / Streaming Logic</span>
@@ -577,9 +585,18 @@
 
             <div class="project-card">
                 <div class="project-card-visual visual-halo">
-                    <div class="halo-ring"></div>
-                    <div class="halo-ring"></div>
-                    <div class="halo-ring"></div>
+                    <div class="visual-grid"></div>
+                    <div class="visual-label" style="top: 10px; left: 10px;">[ TARGET: VIRAL_CORE ]</div>
+                    <div class="visual-label" style="bottom: 10px; right: 10px;">RIPPLE_RADIUS: 4.8X</div>
+                    <div class="halo-center"></div>
+                    <div class="halo-ring" style="animation-delay: 0s;"></div>
+                    <div class="halo-ring" style="animation-delay: 1s;"></div>
+                    <div class="halo-ring" style="animation-delay: 2s;"></div>
+                    <!-- Data Nodes -->
+                    <div class="halo-data-node" style="top: 30%; left: 40%;"></div>
+                    <div class="halo-data-node" style="top: 60%; left: 70%;"></div>
+                    <div class="halo-data-node" style="top: 80%; left: 20%;"></div>
+                    <div class="visual-scanline"></div>
                 </div>
                 <h4>Cultural Forensic Reports</h4>
                 <span class="project-type">Digital Archeology / Catalog Halo</span>
