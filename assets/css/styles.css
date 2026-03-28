@@ -581,6 +581,18 @@ nav {
 }
 
 /* The Halo: Network Distribution */
+.danger-viz-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(1.1) contrast(1.1);
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .danger-viz-img {
+    transform: scale(1.05);
+}
+
 .visual-halo {
     position: relative;
     overflow: hidden;
