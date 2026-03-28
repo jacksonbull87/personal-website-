@@ -527,7 +527,8 @@ nav {
 
 /* Curiosity Card Visuals - Logic First */
 .project-card-visual {
-    height: 160px;
+    width: 100%;
+    aspect-ratio: 2 / 1;
     margin-bottom: 2rem;
     display: flex;
     align-items: center;
