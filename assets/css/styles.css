@@ -583,6 +583,18 @@ nav {
 /* The Halo: Network Distribution */
 .visual-halo {
     position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.halo-viz-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+    filter: brightness(1.2) contrast(1.1);
 }
 
 .halo-node {
