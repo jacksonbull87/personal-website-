@@ -609,47 +609,46 @@ nav {
     align-items: center;
     justify-content: center;
     background: #0D0F12;
+    overflow: hidden;
 }
 
-.server-chassis {
-    width: 120px;
-    height: 40px;
-    background: #1A1D21;
-    border: 2px solid var(--muted);
-    border-radius: 4px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    gap: 8px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+.cyber-server-svg {
+    width: 85%;
+    height: 85%;
     z-index: 2;
+    filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
 }
 
-.server-led {
-    width: 6px;
-    height: 6px;
-    background: #27C93F;
-    border-radius: 50%;
-    box-shadow: 0 0 10px #27C93F;
-    animation: blink 2s infinite;
+.data-pulse {
+    animation: dataStream 4s linear infinite;
 }
 
-.server-port {
-    width: 12px;
-    height: 8px;
-    background: #0D0F12;
-    border: 1px solid var(--muted);
+.data-pulse-reverse {
+    animation: dataStreamReverse 3s linear infinite;
+}
+
+.power-led {
+    animation: ledPulse 2s ease-in-out infinite;
+}
+
+@keyframes dataStream {
+    to { stroke-dashoffset: -20; }
+}
+
+@keyframes dataStreamReverse {
+    to { stroke-dashoffset: 20; }
+}
+
+@keyframes ledPulse {
+    0%, 100% { opacity: 1; filter: brightness(1.2) blur(1px); }
+    50% { opacity: 0.6; filter: brightness(0.8) blur(0.5px); }
 }
 
 .visual-server .visual-label {
-    bottom: 15px;
-    right: 20px;
-}
-
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
 }
 
 .halo-viz-img {
