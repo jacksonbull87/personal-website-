@@ -11,6 +11,7 @@
     
     /* Domain Accents */
     --logic-blue: #6366F1;     /* Professional Logic */
+    --water-blue: #4A9EBF;     /* Spotify Trend Analyzer / Resume blue */
     --grow-sage: #849483;      /* Cultivation Sage */
     --bread-warm: #D97706;     /* Sandwich Warmth */
     --rust-red: #991B1B;       /* Mechanical Rust */
@@ -257,6 +258,7 @@ nav {
 
 /* Custom Domain Accents */
 .card--professional { --card-accent: var(--logic-blue); }
+.card--consultancy { --card-accent: var(--consultancy-gold); }
 .card--sandwich { --card-accent: var(--bread-warm); }
 .card--grow { --card-accent: var(--grow-sage); }
 .card--k10 { --card-accent: var(--rust-red); }
@@ -600,6 +602,54 @@ nav {
     overflow: hidden;
     height: 100%;
     width: 100%;
+}
+
+.visual-server {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0D0F12;
+}
+
+.server-chassis {
+    width: 120px;
+    height: 40px;
+    background: #1A1D21;
+    border: 2px solid var(--muted);
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 8px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    z-index: 2;
+}
+
+.server-led {
+    width: 6px;
+    height: 6px;
+    background: #27C93F;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #27C93F;
+    animation: blink 2s infinite;
+}
+
+.server-port {
+    width: 12px;
+    height: 8px;
+    background: #0D0F12;
+    border: 1px solid var(--muted);
+}
+
+.visual-server .visual-label {
+    bottom: 15px;
+    right: 20px;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
 }
 
 .halo-viz-img {
