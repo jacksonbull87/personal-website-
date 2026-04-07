@@ -7,6 +7,10 @@ A cohesive personal website showcasing diverse interests across professional, ho
 ## 🔴 CRITICAL ISSUES
 - **None currently known:** Website is functional and organized.
 
+### 7. Visual Refresh
+- **Goal:** Add gradient texture to website background instead of solid color.
+- **Status:** 🚀 Planned.
+
 ### 1. Asset Optimization
 - **Goal:** Organize images into subfolders (e.g., `/images/grow-room`, `/images/k10-build`) and update links.
 - **Status:** ✅ Completed (Grow Room images moved and links updated).
