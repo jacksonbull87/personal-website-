@@ -7,6 +7,10 @@ A cohesive personal website showcasing diverse interests across professional, ho
 ## 🔴 CRITICAL ISSUES
 - **None currently known:** Website is functional and organized.
 
+### 8. Media & Podcast Integration
+- **Goal:** Add Chartmetric "How Music Charts" podcast appearance to the Curiosities section.
+- **Status:** ✅ Completed.
+
 ### 7. Visual Refresh
 - **Goal:** Add gradient texture to website background instead of solid color.
 - **Status:** 🚀 Planned.
